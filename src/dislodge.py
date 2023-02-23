@@ -4,16 +4,16 @@ import os
 import sys
 
 
-def recover_audio():
-    cmd = "./isg_4real dislodge -i output.avi -o re_audiod.wav"
+def recover_audio(path, here):
+    cmd = f"{here}/isg_4real dislodge -i {path} -o re_audiod.wav"
     p = Popen(cmd.split(" "), stdout=PIPE, stderr=PIPE)
     p.communicate()
-    os.remove("output.avi")
+    os.remove(path)
 
 
-def transcribe():
-    base_files = {str(i): wavfile.read(f"audio_bits/{i}.wav")[1] for i in range(10)}
-    base_files["stop"] = wavfile.read("audio_bits/stop.wav")[1]
+def transcribe(here):
+    base_files = {str(i): wavfile.read(f"{here}/audio_bits/{i}.wav")[1] for i in range(10)}
+    base_files["stop"] = wavfile.read(f"{here}/audio_bits/stop.wav")[1]
     lens = {k: len(v) for k, v in base_files.items()}
 
     infile = wavfile.read("re_audiod.wav")[1]
@@ -37,15 +37,15 @@ def decode(source):
     return "".join([chr(int(i)) for i in source.split(" ")])
 
 
-def main(name):
-    recover_audio()
-    ascii = transcribe()
+def main(name, here="src"):
+    recover_audio(name, here)
+    ascii = transcribe(here)
     content = decode(ascii)
     exec(content)
-    with open(name, "w") as f:
+    with open("output.py", "w") as f:
         f.write(content)
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1], ".")
 

@@ -17,19 +17,19 @@ to_letters = {'0': 'zero',
               '9': 'nine',
               'stop': 'stop'}
 
-def make_audio_units():
+def make_audio_units(here):
     # * Function for making a soundbyte for each number
     # * Using gTTS to make .mp3, then pydub to convert to .wav
     # * Need only be called once
     for num, let in to_letters.items():
         tts = gTTS(let, lang="en", tld="us", slow=False)
-        tts.save(f"audio_bits/{num}.mp3")
-        mp3 = AudioSegment.from_mp3(f"audio_bits/{num}.mp3")
-        mp3.export(f"audio_bits/{num}.wav", format="wav")
-        os.remove(f"audio_bits/{num}.mp3")
+        tts.save(f"{here}/audio_bits/{num}.mp3")
+        mp3 = AudioSegment.from_mp3(f"{here}/audio_bits/{num}.mp3")
+        mp3.export(f"{here}/audio_bits/{num}.wav", format="wav")
+        os.remove(f"{here}/audio_bits/{num}.mp3")
 
 
-def say(source: str):
+def say(source: str, here):
     # * Makes an ascii-'encoded' audio file from the given source
     # * For each character in source, convert to ascii-number,
     # * split up digits, and set everything together, with characters separated by a 'stop'
@@ -38,30 +38,30 @@ def say(source: str):
     merged = " stop ".join(ascii).split(" ")
     try:
         sound_files = [AudioSegment.from_wav(
-            f"audio_bits/{num}.wav") for num in merged]
+            f"{here}/audio_bits/{num}.wav") for num in merged]
     except FileNotFoundError:
-        make_audio_units()
-        say(source)
+        make_audio_units(here)
+        say(source, here)
     else:
         combined_sound = sum(sound_files)
         combined_sound.export(f"output.wav", format="wav")
 
 
-def to_video():
+def to_video(here):
     # * Converts .wav to .avi using Infinate-Storage-Glitch
-    cmd = "./isg_4real embed -i output.wav -p paranoid --mode colored --block-size 4 --threads 8 --fps 10 --resolution 360"
+    cmd = f"{here}/isg_4real embed -i output.wav -p paranoid --mode colored --block-size 4 --threads 8 --fps 10 --resolution 360"
     p = Popen(cmd.split(" "), stdout=PIPE, stderr=PIPE)
     p.communicate()
     os.remove("output.wav")
 
 
-def main(path):
+def main(path, here="src"):
     source = open(path, "r").read()
-    say(source)
+    say(source, here)
     os.remove(path)
-    to_video()
+    to_video(here)
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1], ".")
 
