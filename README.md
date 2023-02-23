@@ -4,6 +4,17 @@ This is a project that will revolustionize the software development industry. Wh
 
 Switching to our method wil revolutionize the way you backup code. Uploading is idiotically simple. With the API we provide, converting your project to audible file takes only a few seconds per charater, and is then automagically uploaded to YouTube. Getting your code back is just as simple, and no bytes are lost in compression. The great advantage of using our services is that when your are bored, you can watch your own code play on a screen. You can also pay $1, and we will add a soundtrack of your choice. This has the potential to give the ultimate visual and audible ASMR-expierence. While we offer no guarantees, good programmers might even earn a few buck from ad-revenue! Start using WACK-backups today.
 
+## Installation:
+
+[Rust](https://www.rust-lang.org/tools/install)
+[opencv](https://github.com/twistedfall/opencv-rust)
+
+### Quick commands:
+
+`curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+
+`sudo apt install libopencv-dev clang libclang-dev libstdc++-12-dev`
+
 ## Inspirations:
 
 [This video](https://www.youtube.com/watch?v=8I4fd_Sap-g)
