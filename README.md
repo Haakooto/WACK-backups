@@ -19,6 +19,8 @@ For this code to work, you need to install rust and opencv. You can use the comm
 
 ## Usage:
 
+At the moment, this only works for a single python-file. To encrypt this file, place it in this directory. Then run `python main.py NAME.py`. This will turn your code into a video. WARNING: The original file will be gone. To retrieve it, run `python main.py NAME.avi`. This will re-convert the video to the original file, and also execute the script.
+
 ## Inspirations:
 
 [This video](https://www.youtube.com/watch?v=8I4fd_Sap-g)
