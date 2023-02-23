@@ -41,3 +41,7 @@ At the moment, this only works for a single python-file. To encrypt this file, p
 - [x] laugh at stupidity of project 
 - [ ] Du actually useful stuff, like applying to jobs
 
+## Acknowledgements
+
+This project relies heavily on the work of [DvorakDwarf on GitHub](https://github.com/DvorakDwarf/Infinite-Storage-Glitch). I only converts the file to audio, their code does the video thing.
+
